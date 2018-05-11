@@ -73,14 +73,14 @@
 <script src="${request.contextPath}/statics/libs/fastclick.min.js"></script>
 <script src="${request.contextPath}/statics/libs/app.js"></script>
 <script type="text/javascript">
-    var vm = new Vue({
+    var vm=new Vue({
         el:'#rrapp',
         data:{
-            username: '',
-            password: '',
-            captcha: '',
-            error: false,
-            errorMsg: '',
+            username:'',
+            password:'',
+            captcha:'',
+            error:false,
+            errorMsg:'',
             src: 'captcha.jpg'
         },
         beforeCreate: function(){
@@ -88,28 +88,13 @@
                 top.location.href = self.location.href;
             }
         },
-        methods: {
+        methods:{
             refreshCode: function(){
                 this.src = "captcha.jpg?t=" + $.now();
             },
-            login: function (event) {
-                var data = "username="+vm.username+"&password="+vm.password+"&captcha="+vm.captcha;
-                $.ajax({
-                    type: "POST",
-                    url: "sys/login",
-                    data: data,
-                    dataType: "json",
-                    success: function(result){
-                        if(result.code == 0){//登录成功
-                            parent.location.href ='index.html';
-                        }else{
-                            vm.error = true;
-                            vm.errorMsg = result.msg;
-
-                            vm.refreshCode();
-                        }
-                    }
-                });
+            login:function (event) {
+                //alert(vm.password);
+                parent.location.href='index.html';
             }
         }
     });
