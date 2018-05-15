@@ -7,14 +7,11 @@ import com.xiaoxue.modules.sys.entity.SysUserEntity;
 import com.xiaoxue.modules.sys.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
-@RestController
+@Controller
 @RequestMapping("/sys/user")
 public class SysUserController extends AbstractController{
 
@@ -22,6 +19,7 @@ public class SysUserController extends AbstractController{
     private SysUserService sysUserService;
 
     @RequestMapping("/info")
+    @ResponseBody
     public SysUserEntity getInfo(){
         //return null;
         return sysUserService.selectById(1);
@@ -33,10 +31,17 @@ public class SysUserController extends AbstractController{
     }
 
     @RequestMapping("/list")
+    @ResponseBody
     public R list(@RequestParam Map<String,Object> params){
         logger.info("params="+params);
         PageUtils pageUtils=sysUserService.queryPage(params);
         return R.ok().put("page",pageUtils);
+    }
+
+
+    @RequestMapping(value = "index",method = RequestMethod.GET)
+    public String user(){
+        return "modules/user";
     }
 
 
