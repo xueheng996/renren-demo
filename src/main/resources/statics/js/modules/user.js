@@ -68,6 +68,24 @@ var vm = new Vue({
         }
     },
     methods: {
-
+        add:function () {
+            vm.showList=false;
+            vm.title="新增";
+        },
+        reload:function () {
+            vm.showList=true;
+        },
+        deptTree:function () {
+            layer.open({
+                type:1,
+                offset:'50px',
+                skin:'',
+                title:'选择部门',
+                area:['300px','450px'],
+                shade:0,
+                shadeClose:false,
+                content:jQuery("#")
+            });
+        }
     }
 });
