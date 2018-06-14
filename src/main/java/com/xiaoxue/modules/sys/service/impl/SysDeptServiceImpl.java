@@ -1,6 +1,7 @@
 package com.xiaoxue.modules.sys.service.impl;
 
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.xiaoxue.common.utils.PageUtils;
@@ -16,11 +17,18 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class SysDeptServiceImpl extends ServiceImpl<SysDeptDao,SysDeptEntity> implements SysDeptService {
+public class SysDeptServiceImpl extends ServiceImpl<SysDeptDao, SysDeptEntity> implements SysDeptService {
 
 
     @Override
     public List<SysDeptEntity> queryList(Map<String, Object> map) {
-        return null;
+        List<SysDeptEntity> deptEntityList = this.selectList(new EntityWrapper<>());
+        for (SysDeptEntity sysDeptEntity : deptEntityList) {
+            SysDeptEntity parentDeptEntity = this.selectById(sysDeptEntity.getParentId());
+            if (parentDeptEntity != null) {
+                sysDeptEntity.setParentName(parentDeptEntity.getName());
+            }
+        }
+        return deptEntityList;
     }
 }

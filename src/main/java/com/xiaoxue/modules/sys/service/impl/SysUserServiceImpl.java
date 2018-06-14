@@ -18,9 +18,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUserEntity> i
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
-        String username=(String )params.get("username");
+        String username = (String) params.get("username");
 
-        Page<SysUserEntity> page=this.selectPage(new Page<>(1,10));
+        Page<SysUserEntity> page = this.selectPage(new Page<>(1, 10));
 
         return new PageUtils(page);
     }

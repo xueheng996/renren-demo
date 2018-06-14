@@ -10,6 +10,6 @@ import java.util.Map;
 
 public interface SysDeptDao extends BaseMapper<SysDeptEntity> {
 
-    List<SysDeptEntity> queryList(Map<String,Object> map);
+    List<SysDeptEntity> queryList(Map<String, Object> map);
 
 }

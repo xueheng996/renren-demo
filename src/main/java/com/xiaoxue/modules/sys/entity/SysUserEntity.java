@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.annotations.TableName;
 import java.io.Serializable;
 
 /**
- *
  * 系统用户
  */
 @TableName("sys_user")

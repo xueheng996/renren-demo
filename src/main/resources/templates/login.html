@@ -73,28 +73,28 @@
 <script src="${request.contextPath}/statics/libs/fastclick.min.js"></script>
 <script src="${request.contextPath}/statics/libs/app.js"></script>
 <script type="text/javascript">
-    var vm=new Vue({
-        el:'#rrapp',
-        data:{
-            username:'',
-            password:'',
-            captcha:'',
-            error:false,
-            errorMsg:'',
+    var vm = new Vue({
+        el: '#rrapp',
+        data: {
+            username: '',
+            password: '',
+            captcha: '',
+            error: false,
+            errorMsg: '',
             src: 'captcha.jpg'
         },
-        beforeCreate: function(){
-            if(self != top){
+        beforeCreate: function () {
+            if (self != top) {
                 top.location.href = self.location.href;
             }
         },
-        methods:{
-            refreshCode: function(){
+        methods: {
+            refreshCode: function () {
                 this.src = "captcha.jpg?t=" + $.now();
             },
-            login:function (event) {
+            login: function (event) {
                 //alert(vm.password);
-                parent.location.href='index.html';
+                parent.location.href = 'index.html';
             }
         }
     });

@@ -18,20 +18,20 @@ public class PageUtils implements Serializable {
     //列表数据
     private List<?> list;
 
-    public PageUtils(List<?> list,int totalCount,int pageSize,int currPage){
-        this.list=list;
-        this.totalCount=totalCount;
-        this.pageSize=pageSize;
-        this.currPage=currPage;
-        this.totalPage=(int)Math.ceil((double)totalCount/pageSize);
+    public PageUtils(List<?> list, int totalCount, int pageSize, int currPage) {
+        this.list = list;
+        this.totalCount = totalCount;
+        this.pageSize = pageSize;
+        this.currPage = currPage;
+        this.totalPage = (int) Math.ceil((double) totalCount / pageSize);
     }
 
-    public PageUtils(Page<?> page){
-        this.list=page.getRecords();
-        this.totalCount=page.getTotal();
-        this.pageSize=page.getSize();
-        this.currPage=page.getCurrent();
-        this.totalPage=page.getPages();
+    public PageUtils(Page<?> page) {
+        this.list = page.getRecords();
+        this.totalCount = page.getTotal();
+        this.pageSize = page.getSize();
+        this.currPage = page.getCurrent();
+        this.totalPage = page.getPages();
     }
 
     public int getTotalCount() {

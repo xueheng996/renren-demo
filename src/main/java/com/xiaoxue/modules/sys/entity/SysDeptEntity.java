@@ -9,7 +9,6 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- *
  * 系统用户
  */
 @TableName("sys_dept")

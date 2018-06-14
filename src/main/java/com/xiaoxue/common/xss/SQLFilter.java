@@ -10,17 +10,17 @@ public class SQLFilter {
         if (StringUtils.isBlank(str)) {
             return null;
         }
-        str=StringUtils.replace(str,"'","");
-        str=StringUtils.replace(str,"\"","");
-        str=StringUtils.replace(str,";","");
-        str=StringUtils.replace(str,"\\","");
+        str = StringUtils.replace(str, "'", "");
+        str = StringUtils.replace(str, "\"", "");
+        str = StringUtils.replace(str, ";", "");
+        str = StringUtils.replace(str, "\\", "");
 
-        str=str.toLowerCase();
+        str = str.toLowerCase();
 
-        String[] keywords={};
+        String[] keywords = {};
 
-        for (String keyword:keywords){
-            if (str.indexOf(keyword)!=-1){
+        for (String keyword : keywords) {
+            if (str.indexOf(keyword) != -1) {
                 throw new RRException("包含非法字符");
             }
         }

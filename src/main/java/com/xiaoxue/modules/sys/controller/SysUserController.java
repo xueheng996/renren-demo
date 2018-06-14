@@ -13,14 +13,14 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/sys/user")
-public class SysUserController extends AbstractController{
+public class SysUserController extends AbstractController {
 
     @Autowired
     private SysUserService sysUserService;
 
     @RequestMapping("/info")
     @ResponseBody
-    public SysUserEntity getInfo(){
+    public SysUserEntity getInfo() {
         //return null;
         return sysUserService.selectById(1);
     }
@@ -32,15 +32,15 @@ public class SysUserController extends AbstractController{
 
     @RequestMapping("/list")
     @ResponseBody
-    public R list(@RequestParam Map<String,Object> params){
-        logger.info("params="+params);
-        PageUtils pageUtils=sysUserService.queryPage(params);
-        return R.ok().put("page",pageUtils);
+    public R list(@RequestParam Map<String, Object> params) {
+        logger.info("params=" + params);
+        PageUtils pageUtils = sysUserService.queryPage(params);
+        return R.ok().put("page", pageUtils);
     }
 
 
-    @RequestMapping(value = "index",method = RequestMethod.GET)
-    public String user(){
+    @RequestMapping(value = "index", method = RequestMethod.GET)
+    public String user() {
         return "modules/user";
     }
 
