@@ -22,6 +22,9 @@ public class SysUserEntity implements Serializable {
 
     private Integer status;
 
+    private Long deptId;
+
+
     public Integer getStatus() {
         return status;
     }
@@ -76,5 +79,11 @@ public class SysUserEntity implements Serializable {
         this.email = email;
     }
 
+    public Long getDeptId() {
+        return deptId;
+    }
 
+    public void setDeptId(Long deptId) {
+        this.deptId = deptId;
+    }
 }

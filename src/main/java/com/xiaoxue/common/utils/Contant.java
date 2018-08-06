@@ -26,8 +26,8 @@ public class Contant {
 
         MenuType(int value){this.value=value;}
 
-        public int getValue(int value) {
-            this.value = value;
+        public Integer getValue() {
+            return value;
         }
     }
 }

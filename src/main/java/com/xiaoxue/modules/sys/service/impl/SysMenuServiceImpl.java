@@ -56,7 +56,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenuEntity> i
 
     /**
      * 获取所有菜单列表
-     * @param menuList
+     * @param
      * @return
      */
     private List<SysMenuEntity> getAllMenuList(List<Long> menuIdList){
@@ -72,10 +72,12 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenuEntity> i
      * @return
      */
     public List<SysMenuEntity> getMenuTreeList(List<SysMenuEntity> menuList,List<Long> menuIdList){
-        List<SysMenuEntity> sbuMenuList=new ArrayList<SysMenuEntity>();
+        List<SysMenuEntity> subMenuList=new ArrayList<SysMenuEntity>();
         for(SysMenuEntity entity:menuList){
-
-
+            if (entity.getType()==Contant.MenuType.CATALOG.getValue()){
+                entity.setList(getMenuTreeList(queryListParentId(entity.getMenuId(),menuIdList),menuIdList));
+            }
+            subMenuList.add(entity);
         }
         return null;
     }
