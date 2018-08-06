@@ -20,6 +20,29 @@ public class SysUserEntity implements Serializable {
 
     private String email;
 
+    private Integer status;
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    /**
+     * 盐
+     */
+    private String salt;
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
+
     public Long getUserId() {
         return userId;
     }
@@ -52,4 +75,6 @@ public class SysUserEntity implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
+
+
 }

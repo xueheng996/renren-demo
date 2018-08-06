@@ -25,10 +25,7 @@ public class SysUserController extends AbstractController {
         return sysUserService.selectById(1);
     }
 
-    @RequestMapping(value = "login", method = RequestMethod.GET)
-    public String login() {
-        return "login";
-    }
+
 
     @RequestMapping("/list")
     @ResponseBody

@@ -94,7 +94,24 @@
             },
             login: function (event) {
                 //alert(vm.password);
-                parent.location.href = 'index.html';
+                var data="username="+vm.username+"&password="+vm.password;
+                $.ajax({
+                   type:"POST",
+                    url:"sys/login",
+                    data:data,
+                    dataType:"json",
+                    success:function (result) {
+                       alert(JSON.stringify(result))
+                       if(result.code==0){
+                           parent.location.href ='index.html';
+                       }else {
+                           vm.err=true;
+                           vm.errorMsg=result.msg;
+
+                       }
+
+                    }
+                });
             }
         }
     });
