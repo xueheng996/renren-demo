@@ -1,6 +1,8 @@
 package com.xiaoxue.modules.sys.shiro;
 
+import com.xiaoxue.common.utils.Contant;
 import com.xiaoxue.modules.sys.dao.SysUserDao;
+import com.xiaoxue.modules.sys.entity.SysMenuEntity;
 import com.xiaoxue.modules.sys.entity.SysUserEntity;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -10,14 +12,23 @@ import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class UserRealm extends AuthorizingRealm {
 
     @Autowired
     private SysUserDao sysUserDao;
-
+    @Autowired
+    private SysUserDao sysMenuDao;
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
+        SysUserEntity userEntity= (SysUserEntity) principalCollection.getPrimaryPrincipal();
+        Long userId=userEntity.getUserId();
+        if(userId== Contant.SUPER_ADMIN){
+           // List<SysMenuEntity> menuList=sysMenuDao.selectList(null);
+
+        }
         return null;
     }
 
