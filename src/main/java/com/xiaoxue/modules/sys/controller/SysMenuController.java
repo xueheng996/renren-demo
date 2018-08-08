@@ -27,7 +27,8 @@ public class SysMenuController extends AbstractController {
      */
     @RequestMapping("/nav")
     public R nav(){
-        List<SysMenuEntity> menuList=sysMenuService.getUserMenuList(getUserId());
+
+        List<SysMenuEntity> menuList=sysMenuService.getUserMenuList((long) 1);
         return R.ok().put("menuList",menuList);
     }
     /**

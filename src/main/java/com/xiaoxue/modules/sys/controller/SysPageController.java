@@ -14,7 +14,6 @@ public class SysPageController extends AbstractController {
 
     @RequestMapping(value = {"/","index.html"})
     public String index(){
-        logger.info("====================================");
         return "index";
     }
     @RequestMapping("login.html")

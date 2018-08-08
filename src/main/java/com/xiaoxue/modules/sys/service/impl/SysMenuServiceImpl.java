@@ -11,6 +11,9 @@ import com.xiaoxue.modules.sys.entity.SysMenuEntity;
 import com.xiaoxue.modules.sys.entity.SysUserEntity;
 import com.xiaoxue.modules.sys.service.SysMenuService;
 import com.xiaoxue.modules.sys.service.SysUserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,16 +22,21 @@ import java.util.Map;
 
 @Service
 public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenuEntity> implements SysMenuService {
-
+    protected Logger logger = LoggerFactory.getLogger(getClass());
+    @Autowired
+    private SysUserService sysUserService;
 
     @Override
     public List<SysMenuEntity> queryListParentId(Long parentId, List<Long> menuIdList) {
+        logger.info("parentId="+parentId);
         List<SysMenuEntity> menuList=queryListParentId(parentId);
+        logger.info("listsize="+menuIdList.size());
         if(menuList==null){
             return menuList;
         }
         List<SysMenuEntity> userMenuList=new ArrayList<>();
         for (SysMenuEntity menu:menuList){
+            logger.info("menuId="+menu.getMenuId());
             if(menuIdList.contains(menu.getMenuId())){
                 userMenuList.add(menu);
             }
@@ -49,9 +57,10 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenuEntity> i
     @Override
     public List<SysMenuEntity> getUserMenuList(Long userId) {
         if(userId==Contant.SUPER_ADMIN){
-
+            return getAllMenuList(null);
         }
-        return null;
+        List<Long> menuIdList=sysUserService.queryAllMenuId(userId);
+        return getAllMenuList(menuIdList);
     }
 
     /**

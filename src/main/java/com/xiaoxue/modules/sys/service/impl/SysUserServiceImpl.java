@@ -10,6 +10,7 @@ import com.xiaoxue.modules.sys.entity.SysUserEntity;
 import com.xiaoxue.modules.sys.service.SysUserService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -23,5 +24,10 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUserEntity> i
         Page<SysUserEntity> page = this.selectPage(new Page<>(1, 10));
 
         return new PageUtils(page);
+    }
+
+    @Override
+    public List<Long> queryAllMenuId(Long userId) {
+        return null;
     }
 }
