@@ -93,6 +93,7 @@
                 this.src = "captcha.jpg?t=" + $.now();
             },
             login: function (event) {
+                parent.location.href ='index.html';
                 //alert(vm.password);
                 var data="username="+vm.username+"&password="+vm.password;
                 $.ajax({
@@ -105,9 +106,10 @@
                        if(result.code==0){
                            parent.location.href ='index.html';
                        }else {
+
                            vm.err=true;
                            vm.errorMsg=result.msg;
-
+                           parent.location.href ='index.html';
                        }
 
                     }

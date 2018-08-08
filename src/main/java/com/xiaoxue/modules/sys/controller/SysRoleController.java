@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 @Controller
-@RequestMapping("/sys/menu")
+@RequestMapping("/sys/role")
 public class SysRoleController extends AbstractController {
 
 

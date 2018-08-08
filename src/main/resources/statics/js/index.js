@@ -1,13 +1,37 @@
 
 var menuItem=Vue.extend({
     name:'menu-item',
-    props:{item:{}
-    },
+    props:{item:{}},
     template:[
         '<li>',
-        '<a v-if="item.type===0" href="javascript;" >'
+        '   <a v-if="item.type===0" href="javascript:;" >',
+        '       <i v-if="item.icon!=null" :class="item.icon"></i>',
+        '       <span>{{item.name}}</span>',
+        '   </a>',
+        '   <ul v-if="item.type===0" class="treeview-menu">',
+        '       <menu-item :item="item" v-for="item"></menu-item>',
+        '   </ul>',
+
+        '   <a v-if="item.type===1  && item.parentId===0" :href="\'#\'+item.url" >',
+        '       <i v-if="item.icon!=null" :class="item.icon"></i>',
+        '       <span>{{item.name}}</span>',
+        '   </a>',
+
+        '   <a v-if="item.type===1 && item.parentId!=0" :href="\'#\'+item.url"><i v-if="item.icon!=null" :class="item.icon"></i><i v-else class="fa fa-circle-o"></i>{{item.name}}</a>',
+        '</li>'
     ].join('')
 });
+
+$(window).on('resize',function () {
+
+    var $content=$('.content');
+    $content.height($(this).height-120);
+    $content.find('iframe').each(function () {
+       $(this).height($content.height());
+    });
+}).resize();
+
+Vue.component('menuItem',menuItem);
 
 var vm=new Vue({
     el:"#rrapp",
