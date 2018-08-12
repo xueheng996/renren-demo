@@ -30,14 +30,15 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenuEntity> i
     public List<SysMenuEntity> queryListParentId(Long parentId, List<Long> menuIdList) {
         logger.info("parentId="+parentId);
         List<SysMenuEntity> menuList=queryListParentId(parentId);
-        logger.info("listsize="+menuIdList.size());
-        if(menuList==null){
+        logger.info("listsize="+menuList.size());
+        if(menuIdList==null){
+
             return menuList;
         }
         List<SysMenuEntity> userMenuList=new ArrayList<>();
         for (SysMenuEntity menu:menuList){
             logger.info("menuId="+menu.getMenuId());
-            if(menuIdList.contains(menu.getMenuId())){
+            if(menuList.contains(menu.getMenuId())){
                 userMenuList.add(menu);
             }
         }
@@ -70,6 +71,8 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenuEntity> i
      */
     private List<SysMenuEntity> getAllMenuList(List<Long> menuIdList){
         List<SysMenuEntity> menuList=queryListParentId(0L,menuIdList);
+        logger.info("menulistsize="+menuList.size());
+        logger.info("menu="+menuList.get(0).getName());
         getMenuTreeList(menuList,menuIdList);
         return menuList;
     }
@@ -82,13 +85,18 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenuEntity> i
      */
     public List<SysMenuEntity> getMenuTreeList(List<SysMenuEntity> menuList,List<Long> menuIdList){
         List<SysMenuEntity> subMenuList=new ArrayList<SysMenuEntity>();
-        for(SysMenuEntity entity:menuList){
+        logger.info("menuTreeelistsize="+menuList.size());
+
+        for(int i=0;i<menuList.size();i++){
+            SysMenuEntity entity=new SysMenuEntity();
+            //entity=menuIdList.get(i);
+            logger.info("menuEntity =",entity.getName());
             if (entity.getType()==Contant.MenuType.CATALOG.getValue()){
                 entity.setList(getMenuTreeList(queryListParentId(entity.getMenuId(),menuIdList),menuIdList));
             }
             subMenuList.add(entity);
         }
-        return null;
+        return subMenuList;
     }
 
     @Override

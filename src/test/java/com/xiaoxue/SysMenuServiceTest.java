@@ -29,7 +29,7 @@ public class SysMenuServiceTest {
     @Test
     public void test(){
 
-        List<SysMenuEntity> list= sysMenuService.queryListParentId((long) 1);
+        List<SysMenuEntity> list= sysMenuService.queryListParentId((long) 0);
         logger.info("listsize="+list.size());
         for (SysMenuEntity menuEntity:list){
             logger.info("menuId="+menuEntity.getMenuId());

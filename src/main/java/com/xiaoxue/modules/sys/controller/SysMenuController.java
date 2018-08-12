@@ -29,6 +29,7 @@ public class SysMenuController extends AbstractController {
     public R nav(){
 
         List<SysMenuEntity> menuList=sysMenuService.getUserMenuList((long) 1);
+
         return R.ok().put("menuList",menuList);
     }
     /**
