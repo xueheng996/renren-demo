@@ -1,6 +1,7 @@
 package com.xiaoxue.modules.sys.service.impl;
 
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.xiaoxue.common.utils.PageUtils;
@@ -29,5 +30,17 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUserEntity> i
     @Override
     public List<Long> queryAllMenuId(Long userId) {
         return null;
+    }
+
+    @Override
+    public void update(SysUserEntity userEntity) {
+
+    }
+
+    @Override
+    public boolean updatePassword(Long userId, String password, String newPassword) {
+        SysUserEntity userEntity=new SysUserEntity();
+        userEntity.setPassword(newPassword);
+        return this.update(userEntity,new EntityWrapper<SysUserEntity>().eq("user_id",userId).eq("paswword",newPassword));
     }
 }

@@ -10,6 +10,7 @@ import com.xiaoxue.modules.sys.dao.SysUserDao;
 import com.xiaoxue.modules.sys.entity.SysMenuEntity;
 import com.xiaoxue.modules.sys.entity.SysUserEntity;
 import com.xiaoxue.modules.sys.service.SysMenuService;
+import com.xiaoxue.modules.sys.service.SysRoleMenuService;
 import com.xiaoxue.modules.sys.service.SysUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +26,8 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenuEntity> i
     protected Logger logger = LoggerFactory.getLogger(getClass());
     @Autowired
     private SysUserService sysUserService;
+    @Autowired
+    private SysRoleMenuService sysRoleMenuService;
 
     @Override
     public List<SysMenuEntity> queryListParentId(Long parentId, List<Long> menuIdList) {
@@ -102,6 +105,8 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenuEntity> i
     @Override
     public void delete(Long menuId){
 
+        this.deleteById(menuId);
+        sysRoleMenuService.deleteByMap()
     }
 
 }

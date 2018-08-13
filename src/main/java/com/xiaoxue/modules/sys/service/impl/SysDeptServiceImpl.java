@@ -13,6 +13,7 @@ import com.xiaoxue.modules.sys.service.SysDeptService;
 import com.xiaoxue.modules.sys.service.SysUserService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -30,5 +31,32 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptDao, SysDeptEntity> i
             }
         }
         return deptEntityList;
+    }
+
+    @Override
+    public List<Long> querDeptIdList(Long parentId) {
+        return baseMapper.queryDeptIdList(parentId);
+    }
+
+    @Override
+    public List<Long> getSubDeptIdList(Long deptId) {
+        //部门及子部门ID列表
+        List<Long> deptIdList=new ArrayList<>();
+
+        //获取子部门ID
+        List<Long> subIdList=querDeptIdList(deptId);
+        getDeptTreeList(subIdList,deptIdList);
+        return null;
+    }
+
+    private void getDeptTreeList(List<Long> subIdList,List<Long> deptIdList){
+
+        for (Long deptId:subIdList){
+            List<Long> list=querDeptIdList(deptId);
+            if(list.size()>0){
+                getDeptTreeList(list,deptIdList);
+            }
+            deptIdList.add(deptId);
+        }
     }
 }

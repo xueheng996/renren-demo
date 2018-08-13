@@ -14,4 +14,14 @@ public interface SysDeptService extends IService<SysDeptEntity> {
 
     List<SysDeptEntity> queryList(Map<String, Object> map);
 
+    /**
+     * 查询子部门ID列表
+     */
+    List<Long> querDeptIdList(Long parentId);
+
+    /**
+     * 获取子部门ID，用于数据过滤
+     */
+    List<Long> getSubDeptIdList(Long deptId);
+
 }

@@ -22,9 +22,10 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuDao, SysRoleM
     }
 
     @Override
-    public List<Long> queryDeptIdList(Long roleId) {
+    public List<Long> queryMenuIdList(Long roleId) {
         return null;
     }
+
 
     @Override
     public int deleteBatch(Long[] roleIds) {

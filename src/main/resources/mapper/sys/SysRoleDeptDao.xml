@@ -1,7 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.xiaoxue.modules.sys.dao.SysRoleDao">
+<mapper namespace="com.xiaoxue.modules.sys.dao.SysRoleDeptDao">
 
+    <select id="querDeptIdList" resultType="long">
+        select dept_id from sys_role_dept where roid_id in
+        <foreach item="roleId" collection="array" open="(" separator="," close=")">
+            #{roleId}
+        </foreach>
+    </select>
+
+    <select id="deleteBatch">
+        delete from sys_role_dept where role_id in
+        <foreach item="roleId" collection="array" open="(" separator="," close=")">
+            #{roleId}
+        </foreach>
+    </select>
 
 </mapper>

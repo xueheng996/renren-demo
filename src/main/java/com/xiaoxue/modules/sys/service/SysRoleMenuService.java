@@ -12,7 +12,7 @@ public interface SysRoleMenuService extends IService<SysRoleMenuEntity> {
 
    void saveOrUpdate(Long roleId, List<Long> menuIdList);
 
-   List<Long> queryDeptIdList(Long roleId);
+   List<Long> queryMenuIdList(Long roleId);
 
    int deleteBatch(Long[] roleIds);
 
