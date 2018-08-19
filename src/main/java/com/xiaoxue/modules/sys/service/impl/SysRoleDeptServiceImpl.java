@@ -8,9 +8,11 @@ import com.xiaoxue.modules.sys.dao.SysRoleDeptDao;
 import com.xiaoxue.modules.sys.entity.SysRoleDeptEntity;
 import com.xiaoxue.modules.sys.entity.SysRoleEntity;
 import com.xiaoxue.modules.sys.service.SysRoleDeptService;
+import com.xiaoxue.modules.sys.service.SysRoleMenuService;
 import com.xiaoxue.modules.sys.service.SysRoleService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -20,16 +22,31 @@ public class SysRoleDeptServiceImpl extends ServiceImpl<SysRoleDeptDao, SysRoleD
 
     @Override
     public void saveOrUpdate(Long roleId, List<Long> deptIdList) {
+        deleteBatch(new Long[]{roleId});
+
+        if(deptIdList.size()==0){
+            return;
+        }
+
+        List<SysRoleDeptEntity>  list=new ArrayList<>(deptIdList.size());
+        for(Long deptId:deptIdList){
+            SysRoleDeptEntity sysRoleDeptEntity=new SysRoleDeptEntity();
+            sysRoleDeptEntity.setDeptId(deptId);
+            sysRoleDeptEntity.setRoleId(roleId);
+
+            list.add(sysRoleDeptEntity);
+        }
+        this.insertBatch(list);
 
     }
 
     @Override
     public List<Long> queryDeptIdList(Long[] roleIds) {
-        return null;
+        return baseMapper.queryDeptIdList(roleIds);
     }
 
     @Override
     public int deleteBatch(Long[] roleIds) {
-        return 0;
+        return baseMapper.deletBatch(roleIds);
     }
 }

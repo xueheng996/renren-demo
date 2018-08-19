@@ -18,6 +18,8 @@ public interface SysUserService extends IService<SysUserEntity> {
      */
     List<Long> queryAllMenuId(Long userId);
 
+    void save(SysUserEntity user);
+
     void update(SysUserEntity userEntity);
 
     boolean updatePassword(Long userId,String password,String newPassword);

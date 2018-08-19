@@ -4,6 +4,7 @@ package com.xiaoxue.modules.sys.service.impl;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.xiaoxue.common.utils.Contant;
+import com.xiaoxue.common.utils.MapUtils;
 import com.xiaoxue.common.utils.PageUtils;
 import com.xiaoxue.modules.sys.dao.SysMenuDao;
 import com.xiaoxue.modules.sys.dao.SysUserDao;
@@ -106,7 +107,9 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenuEntity> i
     public void delete(Long menuId){
 
         this.deleteById(menuId);
-        sysRoleMenuService.deleteByMap()
+        sysRoleMenuService.deleteByMap(new MapUtils().put("meum_id",menuId));
     }
+
+
 
 }

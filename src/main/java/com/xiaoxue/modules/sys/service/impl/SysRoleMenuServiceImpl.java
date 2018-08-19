@@ -10,6 +10,7 @@ import com.xiaoxue.modules.sys.service.SysRoleDeptService;
 import com.xiaoxue.modules.sys.service.SysRoleMenuService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,17 +19,28 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuDao, SysRoleM
 
     @Override
     public void saveOrUpdate(Long roleId, List<Long> menuIdList) {
+        deleteBatch(new Long[]{roleId});
 
+        if(menuIdList.size()==0){
+            return;
+        }
+        List<SysRoleMenuEntity> list=new ArrayList<>(menuIdList.size());
+        for(Long menuId:menuIdList){
+            SysRoleMenuEntity sysRoleMenuEntity=new SysRoleMenuEntity();
+            sysRoleMenuEntity.setMenuId(menuId);
+            sysRoleMenuEntity.setRoleId(roleId);
+        }
+        this.insertBatch(list);
     }
 
     @Override
     public List<Long> queryMenuIdList(Long roleId) {
-        return null;
+        return baseMapper.queryMenuIdList(roleId);
     }
 
 
     @Override
     public int deleteBatch(Long[] roleIds) {
-        return 0;
+        return baseMapper.deletBatch(roleIds);
     }
 }

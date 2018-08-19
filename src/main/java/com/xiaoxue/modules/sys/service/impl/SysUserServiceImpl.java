@@ -8,15 +8,44 @@ import com.xiaoxue.common.utils.PageUtils;
 import com.xiaoxue.common.utils.Query;
 import com.xiaoxue.modules.sys.dao.SysUserDao;
 import com.xiaoxue.modules.sys.entity.SysUserEntity;
+import com.xiaoxue.modules.sys.service.SysDeptService;
+import com.xiaoxue.modules.sys.service.SysUserRoleService;
 import com.xiaoxue.modules.sys.service.SysUserService;
+import com.xiaoxue.modules.sys.shiro.ShiroUtil;
+import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 @Service
 public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUserEntity> implements SysUserService {
 
+    @Autowired
+    private SysUserRoleService sysUserRoleService;
+    @Autowired
+    private SysDeptService sysDeptService;
+
+
+    @Override
+    public List<Long> queryAllMenuId(Long userId) {
+        return baseMapper.queryAllMenuId(userId);
+    }
+
+    @Override
+    public void save(SysUserEntity user) {
+        user.setCreateTime(new Date());
+
+        String salt=RandomStringUtils.randomAlphabetic(20);
+        user.setSalt(salt);
+        user.setPassword(ShiroUtil.sha256(user.getPassword(),user.getSalt()));
+        this.insert(user);
+
+        sysUserRoleService.saveOrUpdate(user.getUserId(),user.getRoleIdList());
+    }
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -27,14 +56,18 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUserEntity> i
         return new PageUtils(page);
     }
 
-    @Override
-    public List<Long> queryAllMenuId(Long userId) {
-        return null;
-    }
+
 
     @Override
     public void update(SysUserEntity userEntity) {
+        if(StringUtils.isBlank(userEntity.getPassword())){
+            userEntity.setPassword(null);
+        }else {
+            userEntity.setPassword(ShiroUtil.sha256(userEntity.getPassword(),userEntity.getSalt()));
+        }
+        this.updateById(userEntity);
 
+        sysUserRoleService.saveOrUpdate(userEntity.getUserId(),userEntity.getRoleIdList());
     }
 
     @Override

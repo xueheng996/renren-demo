@@ -1,9 +1,12 @@
 package com.xiaoxue.modules.sys.entity;
 
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 
 /**
  * 系统用户
@@ -24,6 +27,26 @@ public class SysUserEntity implements Serializable {
 
     private Long deptId;
 
+    private Date createTime;
+
+    @TableField(exist = false)
+    private List<Long> roleIdList;
+
+    public List<Long> getRoleIdList() {
+        return roleIdList;
+    }
+
+    public void setRoleIdList(List<Long> roleIdList) {
+        this.roleIdList = roleIdList;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
 
     public Integer getStatus() {
         return status;
