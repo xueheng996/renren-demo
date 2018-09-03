@@ -30,29 +30,9 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenuEntity> i
     @Autowired
     private SysRoleMenuService sysRoleMenuService;
 
-    @Override
-    public List<SysMenuEntity> queryListParentId(Long parentId, List<Long> menuIdList) {
-        logger.info("parentId="+parentId);
-        List<SysMenuEntity> menuList=queryListParentId(parentId);
-        logger.info("listsize="+menuList.size());
-        if(menuIdList==null){
 
-            return menuList;
-        }
-        List<SysMenuEntity> userMenuList=new ArrayList<>();
-        for (SysMenuEntity menu:menuList){
-            logger.info("menuId="+menu.getMenuId());
-            if(menuList.contains(menu.getMenuId())){
-                userMenuList.add(menu);
-            }
-        }
-        return userMenuList;
-    }
 
-    @Override
-    public List<SysMenuEntity> queryListParentId(Long parentId) {
-        return baseMapper.queryListParentId(parentId);
-    }
+
 
     @Override
     public List<SysMenuEntity> queryNotButtonList() {
@@ -62,6 +42,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenuEntity> i
     @Override
     public List<SysMenuEntity> getUserMenuList(Long userId) {
         if(userId==Contant.SUPER_ADMIN){
+
             return getAllMenuList(null);
         }
         List<Long> menuIdList=sysUserService.queryAllMenuId(userId);
@@ -81,6 +62,30 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenuEntity> i
         return menuList;
     }
 
+    @Override
+    public List<SysMenuEntity> queryListParentId(Long parentId, List<Long> menuIdList) {
+        logger.info("parentId="+parentId);
+        List<SysMenuEntity> menuList=queryListParentId(parentId);
+        logger.info("menuListsize="+menuList.size());
+        if(menuIdList==null){
+            return menuList;
+        }
+        List<SysMenuEntity> userMenuList=new ArrayList<>();
+        for (int i=0;i<menuList.size();i++){
+            SysMenuEntity menu=menuList.get(i);
+            logger.info("menuId="+menu.getMenuId());
+            if(menuIdList.contains(menu.getMenuId())){
+                userMenuList.add(menu);
+            }
+        }
+        return userMenuList;
+    }
+
+    @Override
+    public List<SysMenuEntity> queryListParentId(Long parentId) {
+        return baseMapper.queryListParentId(parentId);
+    }
+
     /**
      * 递归
      * @param menuList
@@ -92,9 +97,8 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenuEntity> i
         logger.info("menuTreeelistsize="+menuList.size());
 
         for(int i=0;i<menuList.size();i++){
-            SysMenuEntity entity=new SysMenuEntity();
-            //entity=menuIdList.get(i);
-            logger.info("menuEntity =",entity.getName());
+            SysMenuEntity entity=menuList.get(i);
+            logger.info("menuEntity ="+entity.getName());
             if (entity.getType()==Contant.MenuType.CATALOG.getValue()){
                 entity.setList(getMenuTreeList(queryListParentId(entity.getMenuId(),menuIdList),menuIdList));
             }

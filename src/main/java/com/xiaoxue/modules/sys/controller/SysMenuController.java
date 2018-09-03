@@ -31,6 +31,7 @@ public class SysMenuController extends AbstractController {
      * 导航菜单
      */
     @RequestMapping("/nav")
+    @ResponseBody
     public R nav(){
 
         List<SysMenuEntity> menuList=sysMenuService.getUserMenuList((long) 1);

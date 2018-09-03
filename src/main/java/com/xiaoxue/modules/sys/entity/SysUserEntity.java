@@ -14,6 +14,7 @@ import java.util.List;
 @TableName("sys_user")
 public class SysUserEntity implements Serializable {
 
+
     @TableId
     private Long userId;
 
@@ -22,6 +23,16 @@ public class SysUserEntity implements Serializable {
     private String password;
 
     private String email;
+
+    private String mobile;
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
 
     private Integer status;
 
@@ -108,5 +119,22 @@ public class SysUserEntity implements Serializable {
 
     public void setDeptId(Long deptId) {
         this.deptId = deptId;
+    }
+
+
+    @Override
+    public String toString() {
+        return "SysUserEntity{" +
+                "userId=" + userId +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", mobile='" + mobile + '\'' +
+                ", status=" + status +
+                ", deptId=" + deptId +
+                ", createTime=" + createTime +
+                ", roleIdList=" + roleIdList +
+                ", salt='" + salt + '\'' +
+                '}';
     }
 }

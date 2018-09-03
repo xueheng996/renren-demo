@@ -31,6 +31,8 @@
         <div v-if="error" class="alert alert-danger alert-dismissible">
             <h4 style="margin-bottom: 0px;"><i class="fa fa-exclamation-triangle"></i> {{errorMsg}}</h4>
         </div>
+
+
         <div class="form-group has-feedback">
             <input type="text" class="form-control" v-model="username" placeholder="账号">
             <span class="glyphicon glyphicon-user form-control-feedback"></span>
@@ -93,23 +95,23 @@
                 this.src = "captcha.jpg?t=" + $.now();
             },
             login: function (event) {
-                parent.location.href ='index.html';
+                //parent.location.href ='index.html';
                 //alert(vm.password);
-                var data="username="+vm.username+"&password="+vm.password;
+                var data="username="+vm.username+"&password="+vm.password+"&captcha="+vm.captcha;
                 $.ajax({
                    type:"POST",
                     url:"sys/login",
                     data:data,
                     dataType:"json",
                     success:function (result) {
-                       alert(JSON.stringify(result))
+                       //alert(JSON.stringify(result))
                        if(result.code==0){
                            parent.location.href ='index.html';
                        }else {
 
-                           vm.err=true;
+                           vm.error=true;
                            vm.errorMsg=result.msg;
-                           parent.location.href ='index.html';
+                           vm.refreshCode();
                        }
 
                     }

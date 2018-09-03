@@ -4,11 +4,15 @@ $(function () {
         url: 'http://localhost:8088/renren-demo/' + 'sys/user/list',
         datatype: "json",
         colModel: [
-
+            {label: '用户ID', name: 'userId',index:"user_id", width: 75,key:true},
             {label: '用户名', name: 'username', width: 75},
-
-            {label: '邮箱', name: 'email', width: 90}
-
+            {label: '所属部门', name: 'deptName', width: 75,sortable:false},
+            {label: '邮箱', name: 'email', width: 90},
+            {label: '手机号',name:'mobile',width:100},
+            {label: '状态', name: 'status', width: 60,fomatter:function (value,option,row) {
+                    return value===0 ? '<span class="label label-danger"></span>' : '<span class="label label-success"></span>';
+                }},
+            {label:'创建时间', name:'createTime',index:'create_time',width:85}
         ],
         viewrecords: true,
         height: 385,
@@ -68,17 +72,87 @@ var vm = new Vue({
         }
     },
     methods: {
+        query:function(){
+            vm.reload();
+        },
         add: function () {
             vm.showList = false;
             vm.title = "新增";
+            vm.roleList={};
+            vm.user={deptName:null, deptId:null, statues:1, roleIdList:[]};
+
+            this.getRoleList();
 
             vm.getDept();
         },
+        saveOrUpdate:function(){
+            var url = vm.user.userId == null ? "sys/user/save" : "sys/user/update";
+            $.ajax({
+                type:"POST",
+                url:baseURL+url,
+                contentType:"application/json",
+                data:JSON.stringify(vm.user),
+                success:function (r) {
+                    if(r.code===0){
+                        alert('操作成功',function () {
+                            vm.reload();
+                        })
+                    }else{
+                        alert(r.msg);
+                    }
+                }
+            });
+
+        },
+        update:function(){
+            var userId=getSelectedRow();
+            if(userId==null){
+                return;
+            }
+            vm.showList=false;
+            vm.title="修改";
+            vm.getUser(userId);
+
+            this.getRoleList();
+        },
+        getUser: function(userId){
+            $.get(baseURL+"sys/user/info/"+userId, function (r) {
+                vm.user=r.user;
+                vm.user.password=null;
+
+                vm.getDept();
+            });
+        },
+        del:function(){
+            var userIds=getSelectedRows();
+            if(userIds==null){
+                return;
+            }
+            confirm('确认要删除选中的记录?',function () {
+                $.ajax({
+                    type: "POST",
+                    url: baseURL+"sys/user/delete",
+                    contentType:"application/json",
+                    data: JSON.stringify(userIds),
+                    success:function (r) {
+                        if(r.code==0){
+                            alert('操作成功',function () {
+                                vm.reload();
+                            });
+                        }else {
+                            alert(r.msg);
+                        }
+                    }
+                });
+            });
+        },
         reload: function () {
             vm.showList = true;
-        },
-        saveOrUpdate: function () {
-            alert('部门名称=' + vm.user.deptName);
+            var page=$('#jqGrid').jqGrid('getGridParam','page');
+            $('#jqGrid').jqGrid('setGridParam',{
+                postData:{'username':vm.q.username},
+                page:page
+            }).trigger("reloadGrid");
         },
         getDept: function () {
             //加载部门树
@@ -90,6 +164,11 @@ var vm = new Vue({
                     vm.user.deptName = node.name;
                 }
             })
+        },
+        getRoleList:function(){
+            $.get(baseURL+"sys/role/select",function (r) {
+                vm.roleList=r.list;
+            });
         },
         deptTree: function () {
             layer.open({

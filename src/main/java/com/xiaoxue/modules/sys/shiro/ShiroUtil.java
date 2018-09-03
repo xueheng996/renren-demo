@@ -1,5 +1,6 @@
 package com.xiaoxue.modules.sys.shiro;
 
+import com.xiaoxue.common.exception.RRException;
 import com.xiaoxue.modules.sys.entity.SysUserEntity;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
@@ -38,5 +39,15 @@ public class ShiroUtil {
     }
 
     public static void logout(){
-        SecurityUtils.getSubject().logout();    }
+        SecurityUtils.getSubject().logout();
+    }
+
+    public static String getKaptha(String key){
+        Object kaptcha=getSesssionAttribut(key);
+        if(kaptcha==null){
+            throw new RRException("验证码已失效");
+        }
+        getSession().removeAttribute(key);
+        return kaptcha.toString();
+    }
 }

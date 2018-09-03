@@ -25,7 +25,6 @@ public class ShiroConfig {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setRealm(userRealm);
 
-
         return securityManager;
     }
 
@@ -34,8 +33,8 @@ public class ShiroConfig {
     public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilter = new ShiroFilterFactoryBean();
         shiroFilter.setSecurityManager(securityManager);
-        shiroFilter.setLoginUrl("/login");
-        shiroFilter.setUnauthorizedUrl("/");
+        shiroFilter.setLoginUrl("/login.html");
+        shiroFilter.setUnauthorizedUrl("/index.html");
 
         Map<String, String> filterMap = new LinkedHashMap<>();
         filterMap.put("/swagger/**", "anon");
@@ -49,8 +48,8 @@ public class ShiroConfig {
         filterMap.put("/sys/login", "anon");
         filterMap.put("/favicon.ico", "anon");
         filterMap.put("/captcha.jpg", "anon");
-        //filterMap.put("/**", "authc");
-        filterMap.put("/**", "anon");
+        filterMap.put("/**", "authc");
+        //filterMap.put("/**", "anon");
         shiroFilter.setFilterChainDefinitionMap(filterMap);
 
         return shiroFilter;

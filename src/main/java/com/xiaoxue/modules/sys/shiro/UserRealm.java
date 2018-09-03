@@ -7,11 +7,15 @@ import com.xiaoxue.modules.sys.entity.SysMenuEntity;
 import com.xiaoxue.modules.sys.entity.SysUserEntity;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authc.*;
+import org.apache.shiro.authc.credential.CredentialsMatcher;
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,6 +23,8 @@ import java.util.*;
 
 @Component
 public class UserRealm extends AuthorizingRealm {
+
+    protected Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private SysUserDao sysUserDao;
@@ -64,10 +70,19 @@ public class UserRealm extends AuthorizingRealm {
         if(user==null){
             throw new UnknownAccountException("账户或密码不正确");
         }
+        logger.info(user.toString());
         if(user.getStatus()==0){
             throw new LockedAccountException("账户已被锁定，请联系管理员");
         }
         SimpleAuthenticationInfo info=new SimpleAuthenticationInfo(user,user.getPassword(),ByteSource.Util.bytes(user.getSalt()), getName());
-        return null;
+        return info;
+    }
+
+    @Override
+    public void setCredentialsMatcher(CredentialsMatcher credentialsMatcher) {
+        HashedCredentialsMatcher shaCredentialsMatcher = new HashedCredentialsMatcher();
+        shaCredentialsMatcher.setHashAlgorithmName(ShiroUtil.hashAlgorithmName);
+        shaCredentialsMatcher.setHashIterations(ShiroUtil.hashIterations);
+        super.setCredentialsMatcher(shaCredentialsMatcher);
     }
 }
