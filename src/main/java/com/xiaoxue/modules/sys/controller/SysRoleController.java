@@ -33,6 +33,7 @@ public class SysRoleController extends AbstractController {
      * 角色列表
      */
     @RequestMapping("/list")
+    @ResponseBody
     public R list(@RequestParam Map<String ,Object>params){
         PageUtils page=sysRoleService.queryPage(params);
 
@@ -50,6 +51,7 @@ public class SysRoleController extends AbstractController {
      * 角色信息
      */
     @RequestMapping("/info/{roleId}")
+    @ResponseBody
     public R info(@PathVariable("roleId") Long roleId){
 
         SysRoleEntity roleEntity=sysRoleService.selectById(roleId);
@@ -68,6 +70,7 @@ public class SysRoleController extends AbstractController {
      * 保存角色
      */
     @RequestMapping("/save")
+    @ResponseBody
     public R save(@RequestBody SysRoleEntity role){
         ValidatorUtils.validateEntity(role);
 
@@ -80,6 +83,7 @@ public class SysRoleController extends AbstractController {
      * 修改角色
      */
     @RequestMapping("/update")
+    @ResponseBody
     public R update(@RequestBody SysRoleEntity roleEntity){
         ValidatorUtils.validateEntity(roleEntity);
 
@@ -92,6 +96,7 @@ public class SysRoleController extends AbstractController {
      * 删除角色
      */
     @RequestMapping("/delete")
+    @ResponseBody
     public R delete(@RequestBody Long[] roleIds){
         sysRoleService.deleteBatch(roleIds);
 

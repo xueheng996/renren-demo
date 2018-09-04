@@ -1,7 +1,7 @@
 package com.xiaoxue.common.aspect;
 
 import com.xiaoxue.common.annotation.DataFilter;
-import com.xiaoxue.common.utils.Contant;
+import com.xiaoxue.common.utils.Constant;
 import com.xiaoxue.modules.sys.entity.SysUserEntity;
 import com.xiaoxue.modules.sys.service.SysDeptService;
 import com.xiaoxue.modules.sys.service.SysRoleDeptService;
@@ -37,9 +37,9 @@ public class DataFileterAspect {
         Object params=point.getArgs()[0];
         if(params!=null&&params instanceof Map){
             SysUserEntity user=ShiroUtil.getUserEntity();
-            if(user.getUserId()!=Contant.SUPER_ADMIN){
+            if(user.getUserId()!=Constant.SUPER_ADMIN){
                 Map map=(Map)params;
-                map.put(Contant.SQL_FILTER,getSQLFilter(user,point));
+                map.put(Constant.SQL_FILTER,getSQLFilter(user,point));
             }
         }
 

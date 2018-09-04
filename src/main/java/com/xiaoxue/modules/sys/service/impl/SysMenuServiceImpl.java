@@ -1,15 +1,11 @@
 package com.xiaoxue.modules.sys.service.impl;
 
 
-import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-import com.xiaoxue.common.utils.Contant;
+import com.xiaoxue.common.utils.Constant;
 import com.xiaoxue.common.utils.MapUtils;
-import com.xiaoxue.common.utils.PageUtils;
 import com.xiaoxue.modules.sys.dao.SysMenuDao;
-import com.xiaoxue.modules.sys.dao.SysUserDao;
 import com.xiaoxue.modules.sys.entity.SysMenuEntity;
-import com.xiaoxue.modules.sys.entity.SysUserEntity;
 import com.xiaoxue.modules.sys.service.SysMenuService;
 import com.xiaoxue.modules.sys.service.SysRoleMenuService;
 import com.xiaoxue.modules.sys.service.SysUserService;
@@ -20,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenuEntity> implements SysMenuService {
@@ -41,7 +36,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenuEntity> i
 
     @Override
     public List<SysMenuEntity> getUserMenuList(Long userId) {
-        if(userId==Contant.SUPER_ADMIN){
+        if(userId==Constant.SUPER_ADMIN){
 
             return getAllMenuList(null);
         }
@@ -99,7 +94,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenuEntity> i
         for(int i=0;i<menuList.size();i++){
             SysMenuEntity entity=menuList.get(i);
             logger.info("menuEntity ="+entity.getName());
-            if (entity.getType()==Contant.MenuType.CATALOG.getValue()){
+            if (entity.getType()==Constant.MenuType.CATALOG.getValue()){
                 entity.setList(getMenuTreeList(queryListParentId(entity.getMenuId(),menuIdList),menuIdList));
             }
             subMenuList.add(entity);

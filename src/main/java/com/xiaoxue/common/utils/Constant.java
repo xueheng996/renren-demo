@@ -1,6 +1,6 @@
 package com.xiaoxue.common.utils;
 
-public class Contant {
+public class Constant {
 
     /**超级管理员ID**/
     public static final int SUPER_ADMIN=1;

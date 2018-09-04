@@ -1,13 +1,10 @@
 package com.xiaoxue.modules.sys.controller;
 
 
-import com.xiaoxue.common.utils.Contant;
-import com.xiaoxue.common.utils.PageUtils;
+import com.xiaoxue.common.utils.Constant;
 import com.xiaoxue.common.utils.R;
 import com.xiaoxue.modules.sys.entity.SysDeptEntity;
-import com.xiaoxue.modules.sys.entity.SysUserEntity;
 import com.xiaoxue.modules.sys.service.SysDeptService;
-import com.xiaoxue.modules.sys.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -37,11 +34,12 @@ public class SysDeptController extends AbstractController {
      * 选择部门（添加、修改菜单）
      */
     @RequestMapping("/select")
+    @ResponseBody
     public R select(){
         List<SysDeptEntity> deptList=sysDeptService.queryList(new HashMap<String, Object>());
 
         //添加一级部门
-        if(getUserId()==Contant.SUPER_ADMIN){
+        if(getUserId()==Constant.SUPER_ADMIN){
             SysDeptEntity root=new SysDeptEntity();
             root.setDeptId(0L);
             root.setName("一级部门");
@@ -55,9 +53,13 @@ public class SysDeptController extends AbstractController {
      * 上级部门Id（管理员则为0）
      */
     @RequestMapping("/info")
+    @ResponseBody
     public R info(){
         long deptId=0;
-        if(getUserId()!=Contant.SUPER_ADMIN){
+        Long userId;
+        //userId=getUserId();
+        userId=Long.valueOf(1);
+        if(userId!=Constant.SUPER_ADMIN){
             List<SysDeptEntity> deptList=sysDeptService.queryList(new HashMap<String, Object>());
             Long parentId=null;
             for (SysDeptEntity sysDeptEntity:deptList){
@@ -77,6 +79,7 @@ public class SysDeptController extends AbstractController {
      * 信息
      */
     @RequestMapping("/info/{deptId}")
+    @ResponseBody
     public R info(@PathVariable("deptId") Long deptId){
         SysDeptEntity dept=sysDeptService.selectById(deptId);
         return R.ok().put("dept",dept);
@@ -95,6 +98,7 @@ public class SysDeptController extends AbstractController {
      * 修改
      */
     @RequestMapping("/update")
+    @ResponseBody
     public R update(@RequestBody SysDeptEntity dept){
         sysDeptService.updateById(dept);
         return R.ok();
@@ -104,6 +108,7 @@ public class SysDeptController extends AbstractController {
      * 删除
      */
     @RequestMapping("/delete")
+    @ResponseBody
     public R delete(long deptId){
         List<Long> deptList=sysDeptService.querDeptIdList(deptId);
         if(deptList.size()>0){

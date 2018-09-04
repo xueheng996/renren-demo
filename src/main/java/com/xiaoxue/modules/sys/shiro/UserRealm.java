@@ -1,6 +1,6 @@
 package com.xiaoxue.modules.sys.shiro;
 
-import com.xiaoxue.common.utils.Contant;
+import com.xiaoxue.common.utils.Constant;
 import com.xiaoxue.modules.sys.dao.SysMenuDao;
 import com.xiaoxue.modules.sys.dao.SysUserDao;
 import com.xiaoxue.modules.sys.entity.SysMenuEntity;
@@ -37,7 +37,7 @@ public class UserRealm extends AuthorizingRealm {
 
         List<String> permsList;
 
-        if(userId== Contant.SUPER_ADMIN){
+        if(userId== Constant.SUPER_ADMIN){
             List<SysMenuEntity> menuList=sysMenuDao.selectList(null);
             permsList=new ArrayList<>(menuList.size());
             for (SysMenuEntity menu:menuList){
