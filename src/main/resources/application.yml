@@ -78,7 +78,11 @@ mybatis-plus:
     cache-enabled: false
     call-setters-on-nulls: true
 
-
+logging:
+  level: debug
+  level.com.xiaoxue: debug
+  path: logs/
+  file: admin.log
 
 
 

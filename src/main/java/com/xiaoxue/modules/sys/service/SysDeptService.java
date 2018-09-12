@@ -17,7 +17,7 @@ public interface SysDeptService extends IService<SysDeptEntity> {
     /**
      * 查询子部门ID列表
      */
-    List<Long> querDeptIdList(Long parentId);
+    List<Long> queryDeptIdList(Long parentId);
 
     /**
      * 获取子部门ID，用于数据过滤

@@ -9,16 +9,20 @@ import com.xiaoxue.modules.sys.service.SysUserRoleService;
 import com.xiaoxue.modules.sys.shiro.ShiroUtil;
 import org.apache.commons.lang.StringUtils;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+@Aspect
+@Component
 public class DataFileterAspect {
 
     @Autowired
@@ -68,7 +72,7 @@ public class DataFileterAspect {
 
         //用户子部门ID列表
         if(dataFilter.subDept()){
-            List<Long> subDeptIdList=sysDeptService.getSubDeptIdList(userEntity.getDeptId());;
+            List<Long> subDeptIdList=sysDeptService.getSubDeptIdList(userEntity.getDeptId());
             deptIdList.addAll(subDeptIdList);
         }
 
@@ -76,7 +80,7 @@ public class DataFileterAspect {
         sqlFliter.append("(");
 
         if(deptIdList.size()>0){
-            sqlFliter.append(tableAlias).append(dataFilter.userId()).append(" in(").append(StringUtils.join(deptIdList,",")).append("）");
+            sqlFliter.append(tableAlias).append(dataFilter.deptId()).append(" in(").append(StringUtils.join(deptIdList,",")).append(")");
 
         }
         if(dataFilter.user()){

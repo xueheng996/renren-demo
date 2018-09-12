@@ -4,6 +4,7 @@ import com.xiaoxue.common.utils.PageUtils;
 import com.xiaoxue.modules.sys.dao.SysUserDao;
 import com.xiaoxue.modules.sys.entity.SysMenuEntity;
 import com.xiaoxue.modules.sys.entity.SysUserEntity;
+import com.xiaoxue.modules.sys.service.SysDeptService;
 import com.xiaoxue.modules.sys.service.SysMenuService;
 import com.xiaoxue.modules.sys.service.SysUserService;
 import org.junit.Test;
@@ -28,6 +29,9 @@ public class SysMenuServiceTest {
     @Autowired
     private SysMenuService sysMenuService;
 
+    @Autowired
+    private SysDeptService sysDeptService;
+
 
     @Autowired
     private SysUserDao sysUserDao;
@@ -41,9 +45,12 @@ public class SysMenuServiceTest {
 //            logger.info("menuId="+menuEntity.getMenuId());
 //        }
 
-        SysUserEntity user=new SysUserEntity();
-        user.setUsername("admin");
-        user=sysUserDao.selectOne(user);
-        logger.info(user.toString());
+//        SysUserEntity user=new SysUserEntity();
+//        user.setUsername("admin");
+//        user=sysUserDao.selectOne(user);
+//        logger.info(user.toString());
+
+        List<Long> subDeptIdList= sysDeptService.getSubDeptIdList(Long.valueOf(3));
+        logger.info(""+subDeptIdList.size());
     }
 }

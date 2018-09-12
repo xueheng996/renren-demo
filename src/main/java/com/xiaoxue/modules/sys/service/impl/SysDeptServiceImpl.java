@@ -4,6 +4,8 @@ package com.xiaoxue.modules.sys.service.impl;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.xiaoxue.common.annotation.DataFilter;
+import com.xiaoxue.common.utils.Constant;
 import com.xiaoxue.common.utils.PageUtils;
 import com.xiaoxue.modules.sys.dao.SysDeptDao;
 import com.xiaoxue.modules.sys.dao.SysUserDao;
@@ -22,21 +24,27 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptDao, SysDeptEntity> i
 
 
     @Override
+    @DataFilter(subDept = true, user = false)
     public List<SysDeptEntity> queryList(Map<String, Object> map) {
-        List<SysDeptEntity> deptEntityList = this.selectList(new EntityWrapper<>());
-        for (SysDeptEntity sysDeptEntity : deptEntityList) {
-            SysDeptEntity parentDeptEntity = this.selectById(sysDeptEntity.getParentId());
-            if (parentDeptEntity != null) {
+
+        List<SysDeptEntity> deptList =
+                this.selectList(new EntityWrapper<SysDeptEntity>()
+                        .addFilterIfNeed(map.get(Constant.SQL_FILTER) != null, (String)map.get(Constant.SQL_FILTER)));
+
+        for(SysDeptEntity sysDeptEntity : deptList){
+            SysDeptEntity parentDeptEntity =  this.selectById(sysDeptEntity.getParentId());
+            if(parentDeptEntity != null){
                 sysDeptEntity.setParentName(parentDeptEntity.getName());
             }
         }
-        return deptEntityList;
+        return deptList;
     }
 
     @Override
-    public List<Long> querDeptIdList(Long parentId) {
+    public List<Long> queryDeptIdList(Long parentId) {
         return baseMapper.queryDeptIdList(parentId);
     }
+
 
     @Override
     public List<Long> getSubDeptIdList(Long deptId) {
@@ -44,19 +52,22 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptDao, SysDeptEntity> i
         List<Long> deptIdList=new ArrayList<>();
 
         //获取子部门ID
-        List<Long> subIdList=querDeptIdList(deptId);
+        List<Long> subIdList=queryDeptIdList(deptId);
         getDeptTreeList(subIdList,deptIdList);
-        return null;
+        return deptIdList;
     }
 
     private void getDeptTreeList(List<Long> subIdList,List<Long> deptIdList){
 
         for (Long deptId:subIdList){
-            List<Long> list=querDeptIdList(deptId);
+            List<Long> list=queryDeptIdList(deptId);
             if(list.size()>0){
                 getDeptTreeList(list,deptIdList);
             }
             deptIdList.add(deptId);
         }
     }
+
+
+
 }

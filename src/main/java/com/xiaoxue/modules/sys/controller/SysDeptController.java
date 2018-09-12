@@ -57,8 +57,8 @@ public class SysDeptController extends AbstractController {
     public R info(){
         long deptId=0;
         Long userId;
-        //userId=getUserId();
-        userId=Long.valueOf(1);
+        userId=getUserId();
+       // userId=Long.valueOf(1);
         if(userId!=Constant.SUPER_ADMIN){
             List<SysDeptEntity> deptList=sysDeptService.queryList(new HashMap<String, Object>());
             Long parentId=null;
@@ -88,6 +88,7 @@ public class SysDeptController extends AbstractController {
      * 保存
      */
     @RequestMapping("/save")
+    @ResponseBody
     public R save(@RequestBody SysDeptEntity dept){
         sysDeptService.insert(dept);
 
@@ -110,7 +111,7 @@ public class SysDeptController extends AbstractController {
     @RequestMapping("/delete")
     @ResponseBody
     public R delete(long deptId){
-        List<Long> deptList=sysDeptService.querDeptIdList(deptId);
+        List<Long> deptList=sysDeptService.queryDeptIdList(deptId);
         if(deptList.size()>0){
             return R.error("请先删除子部门");
         }
