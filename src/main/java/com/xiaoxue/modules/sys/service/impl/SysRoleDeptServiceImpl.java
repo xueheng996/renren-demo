@@ -11,6 +11,7 @@ import com.xiaoxue.modules.sys.service.SysRoleDeptService;
 import com.xiaoxue.modules.sys.service.SysRoleMenuService;
 import com.xiaoxue.modules.sys.service.SysRoleService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,7 @@ public class SysRoleDeptServiceImpl extends ServiceImpl<SysRoleDeptDao, SysRoleD
 
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void saveOrUpdate(Long roleId, List<Long> deptIdList) {
         deleteBatch(new Long[]{roleId});
 
@@ -47,6 +49,6 @@ public class SysRoleDeptServiceImpl extends ServiceImpl<SysRoleDeptDao, SysRoleD
 
     @Override
     public int deleteBatch(Long[] roleIds) {
-        return baseMapper.deletBatch(roleIds);
+        return baseMapper.deleteBatch(roleIds);
     }
 }

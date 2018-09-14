@@ -48,11 +48,12 @@ var menu_setting = {
         },
         key: {
             url: "nourl"
-        },
-        check:{
+        }
+    },
+    check:{
             enable:true,
             nocheckInherit:true
-        }
+
     }
 };
 //部门结构树
@@ -83,12 +84,12 @@ var data_setting = {
         },
         key: {
             url: "nourl"
-        },
-        check:{
-            enable:true,
-            nocheckInherit:true,
-            cheboxType:{ "Y":"", "N" : ""}
         }
+    },
+    check:{
+        enable:true,
+        nocheckInherit:true,
+        chkboxType:{ "Y":"", "N" : ""}
     }
 };
 
@@ -141,7 +142,7 @@ var vm = new Vue({
                 type:"POST",
                 url:baseURL+url,
                 contentType:"application/json",
-                data:JSON.stringify(vm.user),
+                data:JSON.stringify(vm.role),
                 success:function (r) {
                     if(r.code===0){
                         alert('操作成功',function () {
@@ -243,11 +244,11 @@ var vm = new Vue({
         getDept: function () {
             //加载部门树
             $.get('http://localhost:8088/renren-demo/sys/dept/list', function (r) {
-                ztree = $.fn.zTree.init($('#deptTree'), setting, r);
-                var node = ztree.getNodeByParam("deptId", vm.user.deptId);
+                dept_ztree = $.fn.zTree.init($('#deptTree'), dept_setting, r);
+                var node = dept_ztree.getNodeByParam("deptId", vm.role.deptId);
                 if (node != null) {
-                    ztree.selectNode(node);
-                    vm.user.deptName = node.name;
+                    dept_ztree.selectNode(node);
+                    vm.role.deptName = node.name;
                 }
             })
         },
@@ -269,9 +270,9 @@ var vm = new Vue({
                 content: jQuery("#deptLayer"),
                 btn: ['确定', '取消'],
                 btn1: function (index) {
-                    var node = ztree.getSelectedNodes();
-                    vm.user.deptId = node[0].deptId;
-                    vm.user.deptName = node[0].name;
+                    var node = dept_ztree.getSelectedNodes();
+                    vm.role.deptId = node[0].deptId;
+                    vm.role.deptName = node[0].name;
 
                     layer.close(index);
                 }

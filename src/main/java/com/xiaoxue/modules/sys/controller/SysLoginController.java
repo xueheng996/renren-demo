@@ -71,7 +71,22 @@ public class SysLoginController extends AbstractController {
         return R.ok();
     }
 
+//    /**
+//     * 退出
+//     */
+//    @RequestMapping(value = "logout", method = RequestMethod.GET)
+//    public String logout() {
+//        ShiroUtils.logout();
+//        return "redirect:login.html";
+//    }
 
-
+    /**
+     * 退出
+     */
+    @RequestMapping(value = "/logout",method = RequestMethod.GET)
+    public String logout(){
+        ShiroUtil.logout();
+        return "redirect:login.html";
+    }
 
 }

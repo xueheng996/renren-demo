@@ -17,6 +17,7 @@ import com.xiaoxue.modules.sys.service.*;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.awt.*;
 import java.util.Arrays;
@@ -54,6 +55,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRoleEntity> i
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void save(SysRoleEntity role) {
         role.setCreateTime(new Date());
         this.insert(role);

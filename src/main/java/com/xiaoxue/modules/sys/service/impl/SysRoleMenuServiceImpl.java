@@ -9,6 +9,7 @@ import com.xiaoxue.modules.sys.entity.SysRoleMenuEntity;
 import com.xiaoxue.modules.sys.service.SysRoleDeptService;
 import com.xiaoxue.modules.sys.service.SysRoleMenuService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,7 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuDao, SysRoleM
 
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void saveOrUpdate(Long roleId, List<Long> menuIdList) {
         deleteBatch(new Long[]{roleId});
 
@@ -29,6 +31,8 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuDao, SysRoleM
             SysRoleMenuEntity sysRoleMenuEntity=new SysRoleMenuEntity();
             sysRoleMenuEntity.setMenuId(menuId);
             sysRoleMenuEntity.setRoleId(roleId);
+
+            list.add(sysRoleMenuEntity);
         }
         this.insertBatch(list);
     }
@@ -41,6 +45,6 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuDao, SysRoleM
 
     @Override
     public int deleteBatch(Long[] roleIds) {
-        return baseMapper.deletBatch(roleIds);
+        return baseMapper.deleteBatch(roleIds);
     }
 }

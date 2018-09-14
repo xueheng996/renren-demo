@@ -19,5 +19,5 @@ public interface SysRoleDeptDao extends BaseMapper<SysRoleDeptEntity> {
      * @param roleIds
      * @return
      */
-    int deletBatch(Long[] roleIds);
+    int deleteBatch(Long[] roleIds);
 }

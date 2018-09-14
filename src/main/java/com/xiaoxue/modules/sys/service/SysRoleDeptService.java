@@ -17,6 +17,6 @@ public interface SysRoleDeptService extends IService<SysRoleDeptEntity> {
 
    List<Long> queryDeptIdList(Long[] roleIds);
 
-   int deleteBatch(Long[] roleIds);
+   int  deleteBatch(Long[] roleIds);
 
 }

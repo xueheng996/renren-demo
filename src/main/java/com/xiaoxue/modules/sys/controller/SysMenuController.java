@@ -102,6 +102,8 @@ public class SysMenuController extends AbstractController {
     /**
      * 删除
      */
+    @RequestMapping("/delete")
+    @ResponseBody
     public R delete(Long menuId){
 
         if(menuId<=31){
