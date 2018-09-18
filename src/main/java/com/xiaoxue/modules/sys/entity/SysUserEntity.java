@@ -41,6 +41,9 @@ public class SysUserEntity implements Serializable {
     private Date createTime;
 
     @TableField(exist = false)
+    private String deptName;
+
+    @TableField(exist = false)
     private List<Long> roleIdList;
 
     public List<Long> getRoleIdList() {
@@ -121,20 +124,11 @@ public class SysUserEntity implements Serializable {
         this.deptId = deptId;
     }
 
+    public String getDeptName() {
+        return deptName;
+    }
 
-    @Override
-    public String toString() {
-        return "SysUserEntity{" +
-                "userId=" + userId +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                ", mobile='" + mobile + '\'' +
-                ", status=" + status +
-                ", deptId=" + deptId +
-                ", createTime=" + createTime +
-                ", roleIdList=" + roleIdList +
-                ", salt='" + salt + '\'' +
-                '}';
+    public void setDeptName(String deptName) {
+        this.deptName = deptName;
     }
 }

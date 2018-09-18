@@ -106,7 +106,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenuEntity> i
     public void delete(Long menuId){
 
         this.deleteById(menuId);
-        sysRoleMenuService.deleteByMap(new MapUtils().put("meum_id",menuId));
+        sysRoleMenuService.deleteByMap(new MapUtils().put("menu_id",menuId));
     }
 
 

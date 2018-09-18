@@ -4,9 +4,12 @@ package com.xiaoxue.modules.sys.service.impl;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.xiaoxue.common.annotation.DataFilter;
+import com.xiaoxue.common.utils.Constant;
 import com.xiaoxue.common.utils.PageUtils;
 import com.xiaoxue.common.utils.Query;
 import com.xiaoxue.modules.sys.dao.SysUserDao;
+import com.xiaoxue.modules.sys.entity.SysDeptEntity;
 import com.xiaoxue.modules.sys.entity.SysUserEntity;
 import com.xiaoxue.modules.sys.service.SysDeptService;
 import com.xiaoxue.modules.sys.service.SysUserRoleService;
@@ -48,10 +51,18 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUserEntity> i
     }
 
     @Override
+    @DataFilter(subDept = true,user = false)
     public PageUtils queryPage(Map<String, Object> params) {
         String username = (String) params.get("username");
 
-        Page<SysUserEntity> page = this.selectPage(new Page<>(1, 10));
+        //Page<SysUserEntity> page = this.selectPage(new Page<>(1, 10));
+        Page<SysUserEntity> page=this.selectPage(new  Query<SysUserEntity>(params).getPage(),new EntityWrapper<SysUserEntity>()
+                        .like(StringUtils.isNotBlank(username),"username",username)
+                         .addFilterIfNeed(params.get(Constant.SQL_FILTER)!=null,(String )params.get(Constant.SQL_FILTER)));
+        for (SysUserEntity sysUserEntity:page.getRecords()){
+            SysDeptEntity sysDeptEntity=sysDeptService.selectById(sysUserEntity.getDeptId());
+            sysUserEntity.setDeptName(sysDeptEntity.getName());
+        }
 
         return new PageUtils(page);
     }

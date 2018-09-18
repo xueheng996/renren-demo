@@ -1,5 +1,7 @@
 package com.xiaoxue.common.utils;
 
+import sun.security.krb5.internal.PAForUserEnc;
+
 public class Constant {
 
     /**超级管理员ID**/
@@ -33,4 +35,31 @@ public class Constant {
             return value;
         }
     }
+
+    /**
+     * 定时任务状态
+     */
+
+    public enum ScheduleStatue {
+
+        NORMAL(0),
+
+        PAUSE(1);
+
+        private int value;
+
+        ScheduleStatue(int value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return value;
+        }
+
+
+    }
+
+
+
+
 }

@@ -75,7 +75,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRoleEntity> i
         sysRoleMenuService.saveOrUpdate(role.getRoleId(),role.getMenuIdList());
 
         //更新角色与部门关系
-        sysRoleMenuService.saveOrUpdate(role.getRoleId(),role.getDeptIdList());
+        sysRoleDeptService.saveOrUpdate(role.getRoleId(),role.getDeptIdList());
     }
 
     @Override

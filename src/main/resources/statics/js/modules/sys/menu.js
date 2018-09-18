@@ -138,14 +138,14 @@ var vm = new Vue({
                 btn: ['确定', '取消'],
                 btn1: function (index) {
                     var node = ztree.getSelectedNodes();
-                    vm.user.parentId = node[0].menuId;
-                    vm.user.parentName = node[0].name;
+                    vm.menu.parentId = node[0].menuId;
+                    vm.menu.parentName = node[0].name;
 
                     layer.close(index);
                 }
             });
         },
-        validator:function () {
+        validate:function () {
             if (isBlank(vm.menu.name)){
                 alert("菜单名称不能为空");
                 return true;

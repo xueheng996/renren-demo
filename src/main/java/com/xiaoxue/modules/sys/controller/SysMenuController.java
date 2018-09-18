@@ -79,6 +79,7 @@ public class SysMenuController extends AbstractController {
      * 保存
      */
     @RequestMapping("/save")
+    @ResponseBody
     public R save(@RequestBody SysMenuEntity menu){
         verifyForm(menu);
 
